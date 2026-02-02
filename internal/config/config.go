@@ -2,29 +2,33 @@ package config
 
 import (
 	"fmt"
-	"os"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
-	ServerAddress string
-	DatabaseURL   string // For future database connection
-	Environment   string
+	ServerAddress string `mapstructure:"SERVER_ADDRESS"`
+	DatabaseURL   string `mapstructure:"DATABASE_URL"` // For future database connection
+	Environment   string `mapstructure:"ENVIRONMENT"`
 }
 
-func Load() *Config {
-	return &Config{
-		ServerAddress: getEnv("SERVER_ADDRESS"),
-		DatabaseURL:   getEnv("DATABASE_URL"),
-		Environment:   getEnv("ENVIRONMENT"),
+func Load() (*Config, error) {
+	viper.SetConfigFile(".env")
+	viper.SetConfigType("env")
+	viper.AddConfigPath("./")
+	viper.AddConfigPath("../")
+
+	viper.AutomaticEnv()
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		return nil, fmt.Errorf("error reading config file: %w", err)
 	}
-}
 
-func getEnv(key string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
+	var cfg Config
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return nil, fmt.Errorf("unable to decode config into struct: %w", err)
 	}
 
-	fmt.Errorf("environment variable %s is not set", key)
-
-	return ""
+	return &cfg, nil
 }

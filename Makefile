@@ -14,11 +14,18 @@ GOMOD=$(GOCMD) mod
 
 .DEFAULT_GOAL := run
 
+env_dev:
+	cp .config/.env.development .env
+
 build:
 	@mkdir -p bin
+	cp .config/.env.production ./bin/.env
 	$(GOBUILD) -o $(BINARY_PATH) -v
 
-run:
+build_run: build
+	cd ./bin  && ./$(BINARY_NAME)
+
+run: env_dev
 	$(GOCMD) run main.go
 
 test: ## Run tests
