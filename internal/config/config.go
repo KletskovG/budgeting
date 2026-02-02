@@ -13,8 +13,7 @@ type Config struct {
 
 func Load() *Config {
 	return &Config{
-		// ServerAddress: getEnv("SERVER_ADDRESS"),
-		ServerAddress: ":8080",
+		ServerAddress: getEnv("SERVER_ADDRESS"),
 		DatabaseURL:   getEnv("DATABASE_URL"),
 		Environment:   getEnv("ENVIRONMENT"),
 	}
