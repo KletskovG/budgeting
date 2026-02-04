@@ -23,15 +23,23 @@
     try {
       const filterParams: Partial<IFindFilterOptions> = {};
       
-      if (filters.date) filterParams.date = filters.date;
+      if (filters.date) {
+        filterParams.date = filters.date
+      };
+
       if (filters.expense !== undefined && filters.expense !== null && filters.expense.toString() !== '') {
         filterParams.expense = Number(filters.expense);
-      }
-      if (filters.category) filterParams.category = filters.category;
-      if (filters.note) filterParams.note = filters.note;
+      };
 
-      const hasFilters = Object.keys(filterParams).length > 0;
-      const data = hasFilters ? await fetchTransactions(filterParams) : await fetchTransactions();
+      if (filters.category) {
+        filterParams.category = filters.category
+      };
+      
+      if (filters.note) {
+        filterParams.note = filters.note
+      };
+
+      const data = await fetchTransactions(filterParams);
       
       transactions = data || [];
     } catch (err) {
@@ -43,11 +51,6 @@
   }
 
   onMount(() => {
-    // Initialize Telegram WebApp if available
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.ready();
-      window.Telegram.WebApp.expand();
-    }
     ready = true;
 
     loadTransactions();
