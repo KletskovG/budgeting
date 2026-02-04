@@ -9,11 +9,11 @@
 
   let transactions: {date: string; expense: number; category?: string; note?: string}[] = [];
 
-  let filters: Partial<IFindFilterOptions> = {
+  const filters: Partial<IFindFilterOptions> = {
     date: '',
     expense: undefined,
     category: '',
-    note: ''
+    note: '',
   };
 
   async function loadTransactions() {
@@ -24,7 +24,7 @@
       const filterParams: Partial<IFindFilterOptions> = {};
       
       if (filters.date) {
-        filterParams.date = filters.date
+        filterParams.date = filters.date;
       };
 
       if (filters.expense !== undefined && filters.expense !== null && filters.expense.toString() !== '') {
@@ -32,11 +32,11 @@
       };
 
       if (filters.category) {
-        filterParams.category = filters.category
+        filterParams.category = filters.category;
       };
       
       if (filters.note) {
-        filterParams.note = filters.note
+        filterParams.note = filters.note;
       };
 
       const data = await fetchTransactions(filterParams);

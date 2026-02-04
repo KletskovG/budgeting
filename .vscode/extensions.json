@@ -1,3 +1,6 @@
 {
-  "recommendations": ["svelte.svelte-vscode"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint@2.4.4",
+    "svelte.svelte-vscode"
+  ]
 }

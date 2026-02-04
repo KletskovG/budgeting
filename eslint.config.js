@@ -1,0 +1,180 @@
+import js from '@eslint/js';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import importPlugin from 'eslint-plugin-import';
+import sveltePlugin from 'eslint-plugin-svelte';
+import svelteParser from 'svelte-eslint-parser';
+
+export default [
+	js.configs.recommended,
+	{
+		files: ['**/*.ts', '**/*.js'],
+		languageOptions: {
+			parser: tsParser,
+			parserOptions: {
+				ecmaVersion: 2022,
+				sourceType: 'module',
+			},
+			globals: {
+				console: 'readonly',
+				process: 'readonly',
+				__dirname: 'readonly',
+				__filename: 'readonly',
+				module: 'readonly',
+				require: 'readonly',
+				Buffer: 'readonly',
+				setTimeout: 'readonly',
+				clearTimeout: 'readonly',
+				setInterval: 'readonly',
+				clearInterval: 'readonly',
+				document: 'readonly',
+				window: 'readonly',
+				navigator: 'readonly',
+				location: 'readonly',
+				fetch: 'readonly',
+			},
+		},
+		plugins: {
+			'@typescript-eslint': tsPlugin,
+			'import': importPlugin,
+		},
+		rules: {
+			'indent': ['error', 'tab', {
+				'SwitchCase': 1,
+				'VariableDeclarator': 1,
+				'outerIIFEBody': 1,
+				'FunctionDeclaration': { 'parameters': 1, 'body': 1 },
+				'FunctionExpression': { 'parameters': 1, 'body': 1 },
+				'CallExpression': { 'arguments': 1 },
+				'ArrayExpression': 1,
+				'ObjectExpression': 1,
+				'ImportDeclaration': 1,
+				'flatTernaryExpressions': false,
+				'ignoreComments': false,
+			}],
+			'quotes': ['error', 'single', { 'avoidEscape': true }],
+			'semi': ['error', 'always'],
+			'comma-dangle': ['error', 'always-multiline'],
+			'max-len': ['error', { 'code': 100, 'tabWidth': 1 }],
+			'eol-last': ['error', 'always'],
+			'no-trailing-spaces': 'error',
+			'no-multiple-empty-lines': [
+				'error',
+				{ 'max': 1, 'maxEOF': 0, 'maxBOF': 0 },
+			],
+			'object-curly-spacing': ['error', 'always'],
+			'array-bracket-spacing': ['error', 'never'],
+			'computed-property-spacing': ['error', 'never'],
+			'space-before-function-paren': ['error', {
+				'anonymous': 'always',
+				'named': 'never',
+				'asyncArrow': 'always',
+			}],
+
+			'no-var': 'error',
+			'prefer-const': 'error',
+			'no-unused-vars': 'off',
+			'no-undef': 'off',
+			'no-console': 'error',
+			'no-debugger': 'error',
+			'no-alert': 'error',
+			'no-eval': 'error',
+			'no-implied-eval': 'error',
+			'no-new-func': 'error',
+			'no-script-url': 'error',
+			'complexity': ['error', { 'max': 10 }],
+			'max-depth': ['error', { 'max': 4 }],
+			'max-nested-callbacks': ['error', { 'max': 3 }],
+			'max-params': ['error', { 'max': 4 }],
+
+			'@typescript-eslint/no-unused-vars': ['error', {
+				'argsIgnorePattern': '^_',
+				'varsIgnorePattern': '^_',
+			}],
+			'@typescript-eslint/no-explicit-any': 'error',
+			'@typescript-eslint/prefer-as-const': 'error',
+
+			'prefer-arrow-callback': 'error',
+			'arrow-spacing': 'error',
+			'no-duplicate-imports': 'error',
+			'no-useless-constructor': 'error',
+			'no-useless-rename': 'error',
+			'object-shorthand': 'error',
+			'prefer-destructuring': ['error', {
+				'array': true,
+				'object': true,
+			}],
+			'prefer-template': 'error',
+			'template-curly-spacing': ['error', 'never'],
+			'yoda': 'error',
+			'no-nested-ternary': 'error',
+			'no-unneeded-ternary': 'error',
+			'spaced-comment': ['error', 'always'],
+		},
+	},
+	{
+		files: ['**/*.svelte'],
+		languageOptions: {
+			parser: svelteParser,
+			parserOptions: {
+				parser: tsParser,
+				extraFileExtensions: ['.svelte'],
+			},
+			globals: {
+				console: 'readonly',
+				document: 'readonly',
+				window: 'readonly',
+				navigator: 'readonly',
+				location: 'readonly',
+				fetch: 'readonly',
+			},
+		},
+		plugins: {
+			svelte: sveltePlugin,
+			'@typescript-eslint': tsPlugin,
+		},
+		rules: {
+			...sveltePlugin.configs.recommended.rules,
+			'indent': 'off',
+			'no-trailing-spaces': 'off',
+			'no-console': 'error',
+			'no-debugger': 'error',
+			'no-alert': 'error',
+			'quotes': ['error', 'single', { 'avoidEscape': true }],
+			'semi': ['error', 'always'],
+			'comma-dangle': ['error', 'always-multiline'],
+			'max-len': ['error', { 'code': 100, 'tabWidth': 1 }],
+			'eol-last': ['error', 'always'],
+			'no-multiple-empty-lines': [
+				'error',
+				{ 'max': 1, 'maxEOF': 0, 'maxBOF': 0 },
+			],
+			'object-curly-spacing': ['error', 'always'],
+			'array-bracket-spacing': ['error', 'never'],
+			'no-var': 'error',
+			'prefer-const': 'error',
+			'no-unused-vars': 'off',
+			'@typescript-eslint/no-unused-vars': ['error', {
+				'argsIgnorePattern': '^_',
+				'varsIgnorePattern': '^_',
+			}],
+		},
+	},
+	{
+		files: [
+			'*.config.js',
+			'*.config.ts',
+			'vite.config.ts',
+			'svelte.config.js',
+			'eslint.config.js',
+		],
+		rules: {
+			'no-console': 'off',
+			'@typescript-eslint/no-unused-vars': 'off',
+			'no-unused-vars': 'off',
+		},
+	},
+	{
+		ignores: ['node_modules/', 'dist/', '*.d.ts'],
+	},
+];
