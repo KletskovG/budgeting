@@ -101,6 +101,10 @@
               on:input={loadTransactions}
             />
           </div>
+
+          <button type="button" class="reload-btn" on:click={() => location.reload()}>
+            🔄
+          </button>
         </div>
       </div>
 
