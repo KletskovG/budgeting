@@ -47,3 +47,28 @@ export async function fetchTransactions<T = any>(
 	const result: IApiResponse<T[]> = await response.json();
 	return result.data;
 }
+
+export async function loadTransactions(
+	filters: Partial<IFindFilterOptions>
+): Promise<{date: string; expense: number; category?: string; note?: string}[]> {
+	const filterParams: Partial<IFindFilterOptions> = {};
+
+	if (filters.date) {
+		filterParams.date = filters.date;
+	}
+
+	if (filters.expense !== undefined && filters.expense !== null && filters.expense.toString() !== '') {
+		filterParams.expense = Number(filters.expense);
+	}
+
+	if (filters.category) {
+		filterParams.category = filters.category;
+	}
+
+	if (filters.note) {
+		filterParams.note = filters.note;
+	}
+
+	const data = await fetchTransactions(filterParams);
+	return data || [];
+}

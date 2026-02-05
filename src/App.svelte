@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { fetchTransactions } from './api';
+  import { loadTransactions } from './api';
   import type { IFindFilterOptions } from './typings';
 
   let ready = false;
@@ -16,32 +16,12 @@
     note: '',
   };
 
-  async function loadTransactions() {
+  async function handleLoadTransactions() {
     loading = true;
     error = '';
     
     try {
-      const filterParams: Partial<IFindFilterOptions> = {};
-      
-      if (filters.date) {
-        filterParams.date = filters.date;
-      };
-
-      if (filters.expense !== undefined && filters.expense !== null && filters.expense.toString() !== '') {
-        filterParams.expense = Number(filters.expense);
-      };
-
-      if (filters.category) {
-        filterParams.category = filters.category;
-      };
-      
-      if (filters.note) {
-        filterParams.note = filters.note;
-      };
-
-      const data = await fetchTransactions(filterParams);
-      
-      transactions = data || [];
+      transactions = await loadTransactions(filters);
     } catch (err) {
       error = err instanceof Error ? err.message : 'Failed to fetch transactions';
       transactions = [];
@@ -53,7 +33,7 @@
   onMount(() => {
     ready = true;
 
-    loadTransactions();
+    handleLoadTransactions();
   });
 </script>
 
@@ -68,7 +48,7 @@
               id="date"
               type="date"
               bind:value={filters.date}
-              on:change={loadTransactions}
+              on:change={handleLoadTransactions}
               placeholder="dd.mm.yyyy"
             />
           </div>
@@ -79,7 +59,7 @@
               id="expense"
               type="number"
               bind:value={filters.expense}
-              on:input={loadTransactions}
+              on:input={handleLoadTransactions}
               placeholder="Amount"
               step="0.01"
             />
@@ -91,7 +71,7 @@
               id="category"
               type="text"
               bind:value={filters.category}
-              on:input={loadTransactions}
+              on:input={handleLoadTransactions}
             />
           </div>
 
@@ -101,7 +81,7 @@
               id="note"
               type="text"
               bind:value={filters.note}
-              on:input={loadTransactions}
+              on:input={handleLoadTransactions}
             />
           </div>
 
