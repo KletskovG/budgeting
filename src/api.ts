@@ -49,7 +49,7 @@ export async function fetchTransactions<T = any>(
 }
 
 export async function loadTransactions(
-	filters: Partial<IFindFilterOptions>
+	filters: Partial<IFindFilterOptions>,
 ): Promise<{date: string; expense: number; category?: string; note?: string}[]> {
 	const filterParams: Partial<IFindFilterOptions> = {};
 
@@ -71,4 +71,24 @@ export async function loadTransactions(
 
 	const data = await fetchTransactions(filterParams);
 	return data || [];
+}
+
+export async function fetchReport<T = any>(
+	dateFrom: string,
+	dateTo: string,
+): Promise<T> {
+	const params = new URLSearchParams();
+	params.append('dateFrom', dateFrom);
+	params.append('dateTo', dateTo);
+
+	const url = `${API}${ROUTES.report}?${params.toString()}`;
+
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(`API request failed: ${response.statusText}`);
+	}
+
+	const result: IApiResponse<T> = await response.json();
+	return result.data;
 }

@@ -55,7 +55,7 @@ export default [
 			'quotes': ['error', 'single', { 'avoidEscape': true }],
 			'semi': ['error', 'always'],
 			'comma-dangle': ['error', 'always-multiline'],
-			'max-len': ['error', { 'code': 100, 'tabWidth': 1 }],
+			'max-len': ['error', { 'code': 120, 'tabWidth': 1 }],
 			'eol-last': ['error', 'always'],
 			'no-trailing-spaces': 'error',
 			'no-multiple-empty-lines': [
@@ -143,7 +143,7 @@ export default [
 			'quotes': ['error', 'single', { 'avoidEscape': true }],
 			'semi': ['error', 'always'],
 			'comma-dangle': ['error', 'always-multiline'],
-			'max-len': ['error', { 'code': 100, 'tabWidth': 1 }],
+			'max-len': ['error', { 'code': 120, 'tabWidth': 1 }],
 			'eol-last': ['error', 'always'],
 			'no-multiple-empty-lines': [
 				'error',
