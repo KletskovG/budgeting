@@ -1,14 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { loadTransactions } from '../../api';
-  import type { IFindFilterOptions } from '../../typings';
-  import Loader from '../Loader/Loader.svelte';
+  import { loadTransactions } from '@/api';
+  import type { IFindFilterOptions } from '@/typings';
+  import Loader from '@/lib/Loader/Loader.svelte';
+  import { navigateTo } from '@/lib/router';
 
   let ready = false;
   let loading = false;
   let error = '';
 
-  let transactions: {date: string; expense: number; category?: string; note?: string}[] = [];
+  let transactions: {id: number; date: string; expense: number; category?: string; note?: string}[] = [];
 
   const filters: Partial<IFindFilterOptions> = {
     date: '',
@@ -23,6 +24,7 @@
     
     try {
       transactions = await loadTransactions(filters);
+      console.log(transactions);
     } catch (err) {
       error = err instanceof Error ? err.message : 'Failed to fetch transactions';
       transactions = [];
@@ -102,7 +104,12 @@
         {:else if transactions.length > 0}
           <div class="transactions">
             {#each transactions as transaction}
-              <div class="transaction-card">
+              <div
+                class="transaction-card"
+                role="link"
+                tabindex="0"
+                onclick={() => navigateTo(`/update/${transaction.id}`)}
+              >
                 <div class="transaction-header">
                   <span class="transaction-date">{transaction.date}</span>
                   <span class="transaction-amount">{transaction.expense}</span>

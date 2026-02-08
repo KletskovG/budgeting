@@ -1,7 +1,7 @@
 const BASE_SERVER_URL = 'http://158.160.66.123';
 
 export const API = import.meta.env.DEV
-	? `${BASE_SERVER_URL}:3001`
+	? `${BASE_SERVER_URL}`
 	: BASE_SERVER_URL;
 
 export const ROUTES = {

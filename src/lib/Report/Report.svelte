@@ -1,7 +1,7 @@
 <script lang="ts">
   import './Report.css';
-  import { fetchReport } from '../../api';
-  import Loader from '../Loader/Loader.svelte';
+  import { fetchReport } from '@/api';
+  import Loader from '@/lib/Loader/Loader.svelte';
 
   let dateFrom = '';
   let dateTo = '';

@@ -1,5 +1,5 @@
-import { API, ROUTES } from './const';
-import type { IFindFilterOptions } from './typings';
+import { API, ROUTES } from '@/const';
+import type { IFindFilterOptions } from '@/typings';
 
 interface IApiResponse<T> {
   data: T;
@@ -50,7 +50,7 @@ export async function fetchTransactions<T = any>(
 
 export async function loadTransactions(
 	filters: Partial<IFindFilterOptions>,
-): Promise<{date: string; expense: number; category?: string; note?: string}[]> {
+): Promise<{id: number; date: string; expense: number; category?: string; note?: string}[]> {
 	const filterParams: Partial<IFindFilterOptions> = {};
 
 	if (filters.date) {

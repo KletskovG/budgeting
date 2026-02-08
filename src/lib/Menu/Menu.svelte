@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { currentRoute, navigateTo } from '../router';
+  import { currentRoute, navigateTo } from '@/lib/router';
   import './Menu.css';
-  import { API_INSPECTOR_URL, OPEN_API_SPEC_URL } from '../../const';
+  import { API_INSPECTOR_URL, OPEN_API_SPEC_URL } from '@/const';
 
   const navItems = [
     { path: '/', label: 'Home' },
