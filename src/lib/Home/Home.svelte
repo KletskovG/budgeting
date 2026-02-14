@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { loadTransactions } from '@/api';
+  import { fetchCategories, loadTransactions } from '@/api';
   import type { IFindFilterOptions } from '@/typings';
   import Loader from '@/lib/Loader/Loader.svelte';
   import { navigateTo } from '@/lib/router';
@@ -10,6 +10,7 @@
   let error = '';
 
   let transactions: {id: number; date: string; expense: number; category?: string; note?: string}[] = [];
+  let categories: string[] = [];
 
   const filters: Partial<IFindFilterOptions> = {
     date: '',
@@ -33,10 +34,16 @@
     }
   }
 
-  onMount(() => {
+  onMount(async () => {
     ready = true;
 
     handleLoadTransactions();
+
+    try {
+      categories = await fetchCategories();
+    } catch (err) {
+      console.error('Failed to fetch categories:', err);
+    }
   });
 </script>
 
@@ -70,12 +77,16 @@
 
           <div class="input-group">
             <label for="category">Category</label>
-            <input
+            <select
               id="category"
-              type="text"
               bind:value={filters.category}
-              oninput={handleLoadTransactions}
-            />
+              onchange={handleLoadTransactions}
+            >
+              <option value="">All</option>
+              {#each categories as category}
+                <option value={category}>{category}</option>
+              {/each}
+            </select>
           </div>
 
           <div class="input-group">

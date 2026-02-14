@@ -4,3 +4,8 @@ export interface IFindFilterOptions {
     category?: string | null;
     note?: string | null;
 }
+
+export interface ICategoriesResponse {
+    status: string;
+    data: string[];
+}
