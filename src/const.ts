@@ -7,6 +7,7 @@ export const API = import.meta.env.DEV
 export const ROUTES = {
 	'find': '/find',
 	'report': '/report',
+	'categories': '/categories',
 };
 
 export const API_INSPECTOR_URL = `${BASE_SERVER_URL}/api`;

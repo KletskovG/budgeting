@@ -1,5 +1,5 @@
 import { API, ROUTES } from '@/const';
-import type { IFindFilterOptions } from '@/typings';
+import type { ICategoriesResponse, IFindFilterOptions } from '@/typings';
 
 interface IApiResponse<T> {
   data: T;
@@ -27,6 +27,9 @@ function buildQueryString(filters?: Partial<IFindFilterOptions>): string {
 	if (filters.note) {
 		params.append('note', filters.note);
 	};
+
+	// TODO: User expenses
+	params.append('user', '503054040');
 
 	const queryString = params.toString();
 	return queryString ? `?${queryString}` : '';
@@ -71,6 +74,19 @@ export async function loadTransactions(
 
 	const data = await fetchTransactions(filterParams);
 	return data || [];
+}
+
+export async function fetchCategories(): Promise<string[]> {
+	const url = `${API}${ROUTES.categories}`;
+
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw new Error(`API request failed: ${response.statusText}`);
+	}
+
+	const result: ICategoriesResponse = await response.json();
+	return result.data;
 }
 
 export async function fetchReport<T = any>(
