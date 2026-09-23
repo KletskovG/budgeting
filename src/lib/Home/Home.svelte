@@ -17,6 +17,7 @@
     expense: undefined,
     category: '',
     note: '',
+    income: '',
   };
 
   async function handleLoadTransactions() {
@@ -26,7 +27,7 @@
     try {
       transactions = await loadTransactions(filters);
       console.log(transactions);
-    } catch (err) {
+    } catch (err) {   
       error = err instanceof Error ? err.message : 'Failed to fetch transactions';
       transactions = [];
     } finally {
@@ -69,6 +70,18 @@
               id="expense"
               type="number"
               bind:value={filters.expense}
+              oninput={handleLoadTransactions}
+              placeholder="Amount"
+              step="0.01"
+            />
+          </div>
+          
+          <div class="input-group">
+            <label for="income">Income</label>
+            <input
+              id="income"
+              type="number"
+              bind:value={filters.income}
               oninput={handleLoadTransactions}
               placeholder="Amount"
               step="0.01"

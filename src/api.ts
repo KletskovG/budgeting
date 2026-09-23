@@ -28,6 +28,9 @@ function buildQueryString(filters?: Partial<IFindFilterOptions>): string {
 		params.append('note', filters.note);
 	};
 
+	// TODO: User expenses
+	params.append('user', '503054040');
+
 	const queryString = params.toString();
 	return queryString ? `?${queryString}` : '';
 }
